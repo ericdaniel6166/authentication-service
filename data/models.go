@@ -177,21 +177,6 @@ func (u *PostgresRepository) Update(user User) error {
 	return nil
 }
 
-// Delete deletes one user from the database, by User.ID
-func (u *PostgresRepository) Delete() error {
-	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
-	defer cancel()
-
-	stmt := `DELETE FROM users WHERE id = $1`
-
-	_, err := u.Conn.ExecContext(ctx, stmt, u.ID)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // DeleteByID deletes one user from the database, by ID
 func (u *PostgresRepository) DeleteByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
