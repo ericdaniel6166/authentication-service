@@ -38,8 +38,8 @@ func (u *PostgresTestRepository) GetByEmail(email string) (*User, error) {
 	return &user, nil
 }
 
-// GetOne returns one user by id
-func (u *PostgresTestRepository) GetOne(id int) (*User, error) {
+// GetByID returns one user by id
+func (u *PostgresTestRepository) GetByID(id int) (*User, error) {
 	user := User{
 		ID:        1,
 		FirstName: "First",

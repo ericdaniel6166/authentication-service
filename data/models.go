@@ -118,8 +118,8 @@ func (u *PostgresRepository) GetByEmail(email string) (*User, error) {
 	return &user, nil
 }
 
-// GetOne returns one user by id
-func (u *PostgresRepository) GetOne(id int) (*User, error) {
+// GetByID returns one user by id
+func (u *PostgresRepository) GetByID(id int) (*User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 

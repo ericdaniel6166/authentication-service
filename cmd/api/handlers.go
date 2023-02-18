@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -23,13 +24,15 @@ func (app *Config) Authenticate(w http.ResponseWriter, r *http.Request) {
 	// validate the user against the database
 	user, err := app.Repo.GetByEmail(requestPayload.Email)
 	if err != nil {
-		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
+		log.Printf("email not found, email: %s\n", requestPayload.Email)
+		app.errorJSON(w, errors.New("invalid credentials"), http.StatusUnauthorized)
 		return
 	}
 
 	valid, err := app.Repo.PasswordMatches(requestPayload.Password, *user)
 	if err != nil || !valid {
-		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
+		log.Println("password not match")
+		app.errorJSON(w, errors.New("invalid credentials"), http.StatusUnauthorized)
 		return
 	}
 
@@ -46,7 +49,7 @@ func (app *Config) Authenticate(w http.ResponseWriter, r *http.Request) {
 		Data:    user,
 	}
 
-	app.writeJSON(w, http.StatusAccepted, payload)
+	app.writeJSON(w, http.StatusOK, payload)
 }
 
 func (app *Config) logRequest(name, data string) error {

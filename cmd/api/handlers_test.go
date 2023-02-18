@@ -52,7 +52,7 @@ func Test_Authenticate(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	if rr.Code != http.StatusAccepted {
-		t.Errorf("expected http.StatusAccepted but got %d", rr.Code)
+	if rr.Code != http.StatusOK {
+		t.Errorf("expected http.StatusOK but got %d", rr.Code)
 	}
 }
